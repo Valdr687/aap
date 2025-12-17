@@ -6,7 +6,7 @@
 
 - [Git](#git)
 
-1. Cloner le repo
+1. Cloner (installer) le repo
 
 ```sh
 git clone https://github.com/Valdr687/aap
@@ -23,6 +23,14 @@ Sous Fedora :
 
 ```sh
 sudo dnf install graphviz
+```
+
+## Commandes de référence
+
+### Générer une image à partir d'un fichier .dot
+
+```sh
+dot fichier_entree.dot -T png -o fichier_sortie.png
 ```
 
 ## Git
