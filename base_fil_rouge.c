@@ -21,7 +21,17 @@ typedef t_node * t_list;
 typedef t_list t_stack;
 
 // TODO : type représentant un graphe
+// Graphe par liste d'adjacence (défini dans le sujet)
+typedef struct {
+  int size; // Taille
+  t_list * l; // Contenu (tableau de listes chaînées)
+} t_graph_list; 
 
+// Graphe par matrice d'adjacence (défini dans le sujet)
+typedef struct {
+  int size; // Taille
+  t_bool ** m; // Contenu (tableau à 2 dimensions)
+} t_graph_mat;
 
 
 //////// Graphes ////////
