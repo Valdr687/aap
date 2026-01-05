@@ -22,11 +22,11 @@ void enum_cfc_kosaraju(t_graph_mat * g);
     graph_add_edge(g, 2,1);
     graph_add_edge(g, 2,3);
     graph_add_edge(g, 3,2);
-    for (int i = 0; i< g->size; i++)
+    for (int i = 0; i< g->n; i++)
     {
-        for (int j = 0; j < g->size; j++)
+        for (int j = 0; j < g->n; j++)
         {
-            printf("%d ", g->m[i][j]);
+            printf("%d ", g->mat[i][j]);
         }
         printf("\n");
     }
@@ -38,7 +38,7 @@ void enum_cfc_kosaraju(t_graph_mat * g);
 
 int kosaraju_1_recur(t_graph_mat * g, t_vertex x, t_bool marking[], t_vertex order[], int step){
     marking[x] = 1;
-    for (int y = 0; y < g->size; y++)
+    for (int y = 0; y < g->n; y++)
         { // sur chaque sommet du graphe …
         if (g->m[x][y] && !marking[y])
         {
@@ -55,7 +55,7 @@ void kosaraju_1(t_graph_mat *g){ // sert d'initialisation de toutes les variable
     t_bool marking[N] = {0};
     //t_vertex order[N];
     int step = 0;
-    for (t_vertex x = 0; x < g->size; x++)
+    for (t_vertex x = 0; x < g->n; x++)
     {
         if (!marking[x])
         {
@@ -74,7 +74,7 @@ t_bool kosaraju_2_recur(t_graph_mat *g, t_vertex x, t_bool marking[]){
     } else {
         marking[x] = 1; // si non, on marque le sommet comme exploré
         printf("%d ", x);
-        for (t_vertex y = 0; y < g->size; y++)
+        for (t_vertex y = 0; y < g->n; y++)
         {
             if (g->m[x][y])
                 kosaraju_2_recur(g, y, marking);
@@ -88,9 +88,9 @@ void kosaraju_2(t_graph_mat *g){
     int inv_order[N]; // tableau qui stocke l'ordre suffixe inverse
     t_vertex x;
     int nb_scc = 0; //nb de CFC trouvées
-    for (x = 0; x < g->size; x++)
-        inv_order[(g->size -1) - order[x]] = x;
-    for (x = 0; x < g->size; x++)
+    for (x = 0; x < g->n; x++)
+        inv_order[(g->n -1) - order[x]] = x;
+    for (x = 0; x < g->n; x++)
     {
         if (kosaraju_2_recur(g, inv_order[x], marking))
         {
@@ -108,9 +108,9 @@ void enum_cfc_kosaraju(t_graph_mat * g){
     int nb_scc = 0;
     kosaraju_1(g);
     t_graph_mat * g_inv = graph_inverse(g);
-    for (x = 0; x < g->size; x++)
-        inv_order[(g->size -1) - order[x]] = x;
-    for (x = 0; x < g->size; x++)
+    for (x = 0; x < g->n; x++)
+        inv_order[(g->n -1) - order[x]] = x;
+    for (x = 0; x < g->n; x++)
         if (kosaraju_2_recur(g, inv_order[x], marking))
         {
             nb_scc ++;

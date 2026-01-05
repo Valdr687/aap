@@ -32,10 +32,10 @@ typedef struct {
 
 
 //////// Graphes ////////
-t_graph * graph_new(int size);
-void graph_add_edge(t_graph_mat * g, t_vertex u, t_vertex v);
-t_graph * graph_inverse(t_graph_mat * g);
-void graph_free(t_graph_mat * g);
+t_graph * graph_new(int n);
+void graph_add_edge(t_graph * g, t_vertex u, t_vertex v);
+t_graph * graph_inverse(t_graph * g);
+void graph_free(t_graph * g);
 
 //////// Piles ////////
 void stack_show(t_stack * ps);
@@ -70,6 +70,36 @@ t_node * list_cursor_next(t_node * lc);
 
 //////// Graphes ////////
 
+t_graph * graph_new(int n){
+	t_graph * g = malloc(sizeof(t_graph));
+	assert(g != NULL);
+  g->n = n;
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < n; j++)
+      g -> mat[i][j] = 0;
+  return g;
+
+}
+
+void graph_add_edge(t_graph * g, t_vertex u, t_vertex v){
+  assert(u>=0 && u< g->n);
+  assert(v>=0 && v< g->n);
+  g->mat[u][v] = 1;
+}
+
+t_graph * graph_inverse(t_graph * g){
+  t_graph * g_inv = graph_new(g->n);
+  for (int i = 0; i< g->n; i++)
+    for (int j = 0; j < g->n; j++)
+      if (g->mat[i][j]) g_inv -> mat[j][i] = 1;
+
+  return g_inv;
+}
+
+void graph_free(t_graph * g){
+  free(g);
+}
+
 //////// Liste d'adjacences ////////
 
 // Créer un graphe sous forme de liste d'adjacences
@@ -89,38 +119,6 @@ void ajouter_sommet_liste(t_graph_list * graphe, t_list connection) {
 
 //////// Matrices d'adjacences ////////
 
-// Crée une nouvelle matrice vide
-t_graph_mat * graph_new(int size){
-	t_graph_mat * g = malloc(sizeof(t_graph_mat));
-	assert(g != NULL);
-  g->size = size;
-  for (int i = 0; i < size; i++)
-    for (int j = 0; j < size; j++)
-      g -> mat[i][j] = 0;
-  return g;
-
-}
-
-// Ajoute une arrête entre deux sommets
-void graph_add_edge(t_graph_mat * g, t_vertex u, t_vertex v){
-  assert(u>=0 && u< g->n);
-  assert(v>=0 && v< g->n);
-  g->m[u][v] = 1;
-}
-
-// Calcule le graphe inverse
-t_graph * graph_inverse(t_graph_mat * g){
-  t_graph_mat * g_inv = graph_new(g->size);
-  for (int i = 0; i< g->size; i++)
-    for (int j = 0; j < g->size; j++)
-      if (g->m[i][j]) g_inv -> m[j][i] = 1;
-
-  return g_inv;
-}
-
-void graph_free(t_graph_mat * g){
-  free(g);
-}
 
 //////// Piles ////////
 
