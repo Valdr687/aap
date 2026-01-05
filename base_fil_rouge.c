@@ -5,8 +5,6 @@
 
 #define MAX_READ_LINE 100
 
-
-
 typedef int t_bool;    // Booléen
 typedef int t_vertex;  // Sommet de graphe
 
@@ -20,7 +18,6 @@ typedef t_node * t_list;
 // Pile (de sommets)
 typedef t_list t_stack;
 
-// TODO : type représentant un graphe
 // Graphe par liste d'adjacence (défini dans le sujet)
 typedef struct {
   int size; // Taille
@@ -61,11 +58,11 @@ t_node * list_cursor_next(t_node * lc);
 
 
 //////// main ////////
-int main() {
-  printf("Hello world!\n");
+// int main() {
+//   printf("Hello world!\n");
   
-  return 0;
-}
+//   return 0;
+// }
 
 
 
@@ -73,6 +70,24 @@ int main() {
 
 // TODO : fonctions
 
+//////// Liste d'adjacences ////////
+
+// Créer un graphe sous forme de liste d'adjacences
+// Utilisation : t_graph_list graphe = creer_graphe_liste(); 
+t_graph_list creer_graphe_liste() {
+  t_list l = list_new();
+  t_graph_list graphe = {0,l};
+
+  return graphe;
+}
+
+// Rajouter un sommet à un graphe représenté par une liste d'adjacence
+// Utilisation : ajouter_sommet_liste(t_graph_list * graphe, t_list connection); // Avec connection représentant toutes les connections du sommet rajouté
+void ajouter_sommet_liste(t_graph_list * graphe, t_list connection) {
+
+}
+
+//////// Matrices d'adjacences ////////
 
 
 //////// Piles ////////

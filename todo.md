@@ -1,5 +1,5 @@
 # To Do
 
-- [ ] Lire arguments
+- [X] Lire arguments
 - [ ] Convertir
 - [ ] Executer commande de génération image (O/n)

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "fonctions_support.c"
 
 void erreur_option(char *option);
 void erreur_arguments(int ArgumentCount);
@@ -41,10 +42,11 @@ int main(int ArgumentCount, char **ArgumentList)
 
     i = 0;
 
-    for (i; i < ArgumentCount -1;i++) {
+    for (i; i < ArgumentCount - 1; i++)
+    {
         if (validites[i] == 1) // Option est -i
         {
-            if (validites[i+1] == -1)
+            if (validites[i + 1] == -1)
             {
                 entree = ArgumentList[i + 1];
                 printf("Nom du fichier à lire : %s \n", entree);
@@ -52,7 +54,7 @@ int main(int ArgumentCount, char **ArgumentList)
         }
         if (validites[i] == 2) // Option est -o
         {
-            if (validites[i+1]==-1)
+            if (validites[i + 1] == -1)
             {
                 sortie = ArgumentList[i + 1];
                 printf("Nom du fichier de sortie : %s \n", sortie);
@@ -62,8 +64,26 @@ int main(int ArgumentCount, char **ArgumentList)
 
     // Lecture
 
-    // Depuis un fichier
+    if (entree != NULL) // Depuis un fichier
+    {
+        t_graph_list graphe = lecture(entree);
+        if (graphe.size == -1) {
+            printf("Le fichier est vide ou n'existe pas.\n");
+            return 0;
+        }
+    }
+    // else // Depuis le terminal
+    // {
+    // }
 
+
+    // // Ecriture
+
+    // // Dans un fichier
+
+    // if (sortie != NULL)
+    // {
+    // }
     return 0;
 }
 
