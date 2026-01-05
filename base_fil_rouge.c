@@ -32,7 +32,10 @@ typedef struct {
 
 
 //////// Graphes ////////
-// TODO : prototypes
+t_graph * graph_new(int n);
+void graph_add_edge(t_graph * g, t_vertex u, t_vertex v);
+t_graph * graph_inverse(t_graph * g);
+void graph_free(t_graph * g);
 
 //////// Piles ////////
 void stack_show(t_stack * ps);
@@ -65,10 +68,37 @@ t_node * list_cursor_next(t_node * lc);
 // }
 
 
-
 //////// Graphes ////////
 
-// TODO : fonctions
+t_graph * graph_new(int n){
+	t_graph * g = malloc(sizeof(t_graph));
+	assert(g != NULL);
+  g->n = n;
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < n; j++)
+      g -> mat[i][j] = 0;
+  return g;
+
+}
+
+void graph_add_edge(t_graph * g, t_vertex u, t_vertex v){
+  assert(u>=0 && u< g->n);
+  assert(v>=0 && v< g->n);
+  g->mat[u][v] = 1;
+}
+
+t_graph * graph_inverse(t_graph * g){
+  t_graph * g_inv = graph_new(g->n);
+  for (int i = 0; i< g->n; i++)
+    for (int j = 0; j < g->n; j++)
+      if (g->mat[i][j]) g_inv -> mat[j][i] = 1;
+
+  return g_inv;
+}
+
+void graph_free(t_graph * g){
+  free(g);
+}
 
 //////// Liste d'adjacences ////////
 
