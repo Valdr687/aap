@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#include "base_fil_rouge.h"
 
 #define N 100
 
