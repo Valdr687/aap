@@ -8,15 +8,15 @@
 
 t_vertex order[N];
 
-int kosaraju_1_recur(t_graph * g, t_vertex x, t_bool marking[], t_vertex order[], int step);
-void kosaraju_1(t_graph *g);
-t_bool kosaraju_2_recur(t_graph *g, t_vertex x, t_bool marking[]);
-void kosaraju_2(t_graph *g);
-void g_order(t_graph *g);
-void enum_cfc_kosaraju(t_graph * g);
+int kosaraju_1_recur(t_graph_mat * g, t_vertex x, t_bool marking[], t_vertex order[], int step);
+void kosaraju_1(t_graph_mat *g);
+t_bool kosaraju_2_recur(t_graph_mat *g, t_vertex x, t_bool marking[]);
+void kosaraju_2(t_graph_mat *g);
+void g_order(t_graph_mat *g);
+void enum_cfc_kosaraju(t_graph_mat * g);
 
 /* int main(){
-    t_graph * g = graph_new(4);
+    t_graph_mat * g = graph_new(4);
     graph_add_edge(g, 0, 1);
     graph_add_edge(g, 0,2);
     graph_add_edge(g, 2,1);
@@ -36,11 +36,11 @@ void enum_cfc_kosaraju(t_graph * g);
     return 0;
 } */
 
-int kosaraju_1_recur(t_graph * g, t_vertex x, t_bool marking[], t_vertex order[], int step){
+int kosaraju_1_recur(t_graph_mat * g, t_vertex x, t_bool marking[], t_vertex order[], int step){
     marking[x] = 1;
     for (int y = 0; y < g->n; y++)
         { // sur chaque sommet du graphe …
-        if (g->mat[x][y] && !marking[y])
+        if (g->m[x][y] && !marking[y])
         {
             // … on parcourt la boucle seulement si on n'est pas encore passé par le sommet y
             step = kosaraju_1_recur(g,y,marking, order, step);
@@ -51,7 +51,7 @@ int kosaraju_1_recur(t_graph * g, t_vertex x, t_bool marking[], t_vertex order[]
     return step+1; // étape finale du parcours actuel
 }
 
-void kosaraju_1(t_graph *g){ // sert d'initialisation de toutes les variables nécéssaires dans la fonction récursive
+void kosaraju_1(t_graph_mat *g){ // sert d'initialisation de toutes les variables nécéssaires dans la fonction récursive
     t_bool marking[N] = {0};
     //t_vertex order[N];
     int step = 0;
@@ -64,7 +64,7 @@ void kosaraju_1(t_graph *g){ // sert d'initialisation de toutes les variables n�
     }
 }
 
-t_bool kosaraju_2_recur(t_graph *g, t_vertex x, t_bool marking[]){
+t_bool kosaraju_2_recur(t_graph_mat *g, t_vertex x, t_bool marking[]){
     /* recherche d'une nouvelle CFC --> retourne faux si on est déjà passé par le sommet x
         retourne vrai s'il y a une nouvelle CFC
     */
@@ -76,14 +76,14 @@ t_bool kosaraju_2_recur(t_graph *g, t_vertex x, t_bool marking[]){
         printf("%d ", x);
         for (t_vertex y = 0; y < g->n; y++)
         {
-            if (g->mat[x][y])
+            if (g->m[x][y])
                 kosaraju_2_recur(g, y, marking);
         }
         return 1;
     }
 }
 
-void kosaraju_2(t_graph *g){
+void kosaraju_2(t_graph_mat *g){
     t_bool marking[N] = {0}; // initialisation de tous les marquages à 0
     int inv_order[N]; // tableau qui stocke l'ordre suffixe inverse
     t_vertex x;
@@ -101,13 +101,13 @@ void kosaraju_2(t_graph *g){
     printf("%d composante(s) fortement connexe(s) trouvée(s)\n", nb_scc);
 }
 
-void enum_cfc_kosaraju(t_graph * g){
+void enum_cfc_kosaraju(t_graph_mat * g){
     t_bool marking[N] = {0};
     int inv_order[N];
     t_vertex x;
     int nb_scc = 0;
     kosaraju_1(g);
-    t_graph * g_inv = graph_inverse(g);
+    t_graph_mat * g_inv = graph_inverse(g);
     for (x = 0; x < g->n; x++)
         inv_order[(g->n -1) - order[x]] = x;
     for (x = 0; x < g->n; x++)
