@@ -33,9 +33,13 @@ typedef struct {
 
 //////// Graphes ////////
 t_graph_mat * graph_new(int size);
+t_graph_list graph_list_new(int size);
 void graph_add_edge(t_graph_mat * g, t_vertex u, t_vertex v);
 t_graph_mat * graph_inverse(t_graph_mat * g);
+t_graph_list * graph_inverse_list(t_graph_list *g);
 void graph_free(t_graph_mat * g);
+void graph_list_free(t_graph_list * g);
+
 
 //////// Piles ////////
 void stack_show(t_stack * ps);
@@ -118,9 +122,54 @@ t_graph_mat * graph_inverse(t_graph_mat * g){
   return g_inv;
 }
 
+t_graph_list * graph_inverse_list(t_graph_list * g)
+{
+  t_graph_list * g_inv = malloc(sizeof(t_graph_list));
+  assert(g_inv != NULL);
+
+  *g_inv = graph_list_new(g->size); // initialisation de *g_inv
+
+  for (t_vertex u = 0; u < g->size; u++)
+  {
+    t_node *lc = list_cursor_new(g->l[u]);
+    while (!list_cursor_at_end(lc))
+    {
+      t_vertex v = list_cursor_get_val(lc);
+      g_inv->l[v] = list_add_head(u, g_inv->l[v]); // on inverse le sens entre u et v
+      lc = list_cursor_next(lc);
+    }
+  }
+
+  return g_inv;
+}
+
+
 void graph_free(t_graph_mat * g){
   free(g);
 }
+
+t_graph_list graph_list_new(int size) {
+  t_graph_list g;
+
+  g.size = size;
+  g.l = malloc(size * sizeof(t_list));
+  assert(g.l != NULL);
+
+  for (int i = 0; i < size; i++)
+    g.l[i] = list_new();   // empty adjacency list
+
+  return g;
+}
+
+void graph_list_free(t_graph_list * g) {
+  for (int i = 0; i < g->size; i++)
+    g->l[i] = list_free(g->l[i]);
+
+  free(g->l);
+  g->l = NULL;
+  g->size = 0;
+}
+
 
 //////// Piles ////////
 

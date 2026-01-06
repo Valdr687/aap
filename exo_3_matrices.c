@@ -118,5 +118,4 @@ void enum_cfc_kosaraju(t_graph_mat * g){
         }
     printf("%d CFC trouvée(s)\n", nb_scc);
     graph_free(g_inv);
-
 }
