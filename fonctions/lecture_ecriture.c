@@ -1,12 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "base_fil_rouge.c"
-#include "base.c"
-#define MAX_LEN 100
-
-t_graph_list list_lecture(char *chemin, t_type *type, char ***sommets);
-t_graph_mat *mat_lecture(char *chemin, t_type *type, char ***sommets);
+#include "lecture_ecriture.h"
 
 /////////////////////////////// Lecture dans un fichier ///////////////////////////////
 

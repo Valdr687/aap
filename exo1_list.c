@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "./fonctions/lecture_ecriture.c"
+#include "./fonctions/lecture_ecriture.h"
 
 void erreur_option(char *option);
 void erreur_arguments(int ArgumentCount);

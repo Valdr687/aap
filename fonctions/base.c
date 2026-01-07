@@ -1,20 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#define MAX_LEN 100
-
-// Types
-typedef enum
-{
-    INT,
-    STR
-} t_type;
-
-// Fonction briques
-char **division(char *t);
-char *slice(char *str, size_t start, size_t end);
-int rang_par_valeur(char *s, char **t, int taille);
-t_type type_graphe(char *chemin);
+#include "base.h"
 
 // TODO : Description
 char **division(char *t)

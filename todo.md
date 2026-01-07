@@ -4,10 +4,9 @@
 
 ### Structure du projet
 
-- [ ] **Pas de fichiers headers** (.h) - créer des headers séparés
-- [ ] **Inclusion de .c dans .c** (ligne 4-5 de lecture_ecriture.c) - très mauvaise pratique
-- [~] **Duplications de code** entre `list_lecture()` et `mat_lecture()` - PARTIELLEMENT RÉSOLU (fonction `caracteristiques_graphe()` créée, mais il reste encore beaucoup de duplication dans la boucle de lecture)
 - [ ] Créer un Makefile pour la compilation
+- [X] Créer des headers (.h) séparés (base.h, base_fil_rouge.h, lecture_ecriture.h) ✅ FAIT
+- [X] Modifier les fichiers .c pour inclure les .h au lieu des .c ✅ FAIT
 
 ### Logique et code mort
 
