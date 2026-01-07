@@ -5,6 +5,7 @@
 
 #define MAX_READ_LINE 100
 
+// Types de base
 typedef int t_bool;    // Booléen
 typedef int t_vertex;  // Sommet de graphe
 
@@ -107,14 +108,29 @@ void graph_list_free(t_graph_list *g)
 
 // Crée une nouvelle matrice vide
 t_graph_mat * graph_mat_new(int size){
+	int i;
 	t_graph_mat * g = malloc(sizeof(*g));
 	assert(g != NULL);
-  g->size = size;
-  for (int i = 0; i < size; i++)
-    for (int j = 0; j < size; j++)
-      g -> m[i][j] = 0;
-  return g;
-
+	g->size = size;
+	
+	// Allocation de la première dimension de la matrice d'adjacence
+	// (tableau de tableaux de booléens)
+	g->m = malloc(g->size * sizeof(*(g->m)));
+	assert(g->m != NULL);
+	
+	// Allocation de la deuxième dimension de la matrice d'adjacence
+	// (chaque élément est un tableau de booléens)
+	for (i = 0; i < g->size; i++) {
+		g->m[i] = malloc(g->size * sizeof(*(g->m[i])));
+		assert(g->m[i] != NULL);
+	}
+	
+	// Initialisation de la matrice à 0
+	for (i = 0; i < size; i++)
+		for (int j = 0; j < size; j++)
+			g->m[i][j] = 0;
+	
+	return g;
 }
 
 // Ajoute une arrête entre deux sommets u et v (u et v entiers)

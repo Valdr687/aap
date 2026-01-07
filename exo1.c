@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <string.h>
-#include "fonctions_support.c"
+#include "./fonctions/lecture_ecriture.c"
 
 void erreur_option(char *option);
 void erreur_arguments(int ArgumentCount);
 int est_option_valide(char *option, char OptionsValides[][3]);
-int main(int ArgumentCount, char **ArgumentList)
 
+int main(int ArgumentCount, char **ArgumentList)
 {
     char OptionsValides[2][3] = {"-i", "-o"};
 
@@ -64,10 +64,15 @@ int main(int ArgumentCount, char **ArgumentList)
 
     // Lecture
 
+    t_type type;
+    char **sommets = NULL;
+    t_graph_list graphe;
+    
     if (entree != NULL) // Depuis un fichier
     {
-        t_graph_list graphe = list_lecture(entree);
-        if (graphe.size == -1) {
+        graphe = list_lecture(entree, &type, &sommets);
+        if (graphe.size == -1)
+        {
             printf("Le fichier est vide ou n'existe pas.\n");
             return 0;
         }
@@ -76,7 +81,6 @@ int main(int ArgumentCount, char **ArgumentList)
     // {
     // }
 
-
     // // Ecriture
 
     // // Dans un fichier
@@ -84,6 +88,17 @@ int main(int ArgumentCount, char **ArgumentList)
     // if (sortie != NULL)
     // {
     // }
+    
+    // Libération de la mémoire
+    if (type == STR && sommets != NULL)
+    {
+        for (int i = 0; i < graphe.size; i++)
+        {
+            free(sommets[i]);
+        }
+        free(sommets);
+    }
+    
     return 0;
 }
 
