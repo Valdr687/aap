@@ -7,7 +7,7 @@ Le programme vérifie que les options soient valides mais ne vérifie pas les no
 ## Erreurs rencontrées
 
 Cascade de test : else if teste toujours donc erreur
-utilisition de fichiers.h 
+utilisition de fichiers.h
 
 1) Compilation multiple
 2) Plus aisé pour les makefiles

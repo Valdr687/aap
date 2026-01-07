@@ -15,7 +15,7 @@ void kosaraju_2_list(t_graph_list *g);
 void g_order_list(t_graph_list *g);
 void enum_cfc_kosaraju_list(t_graph_list * g);
 
-/*int main(){
+int main(){
     t_graph_list g = graph_list_new(4);
 
     g.l[0] = list_add_head(1, g.l[0]);
@@ -30,7 +30,6 @@ void enum_cfc_kosaraju_list(t_graph_list * g);
     graph_list_free(&g);
     return 0;
 }
-*/
 
 
 void kosaraju_1_recur_list(t_graph_list * g, t_vertex x, t_bool marking[], t_vertex order[], int * step){

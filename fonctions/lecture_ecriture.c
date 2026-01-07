@@ -35,6 +35,9 @@ t_graph_list list_lecture(char *chemin, t_type *type, char ***sommets)
 
     int sommet_lu = 0;
     char tampon[MAX_LEN];
+    
+    // Sauter la première ligne (taille et type)
+    fgets(tampon, sizeof(tampon), fichier_à_lire);
 
     while (fgets(tampon, sizeof(tampon), fichier_à_lire) != NULL)
     {
@@ -119,6 +122,9 @@ t_graph_mat *mat_lecture(char *chemin, t_type *type, char ***sommets)
     // Lecture des sommets
     int sommet_lu = 0;
     char tampon[MAX_LEN];
+    
+    // Sauter la première ligne (taille et type)
+    fgets(tampon, sizeof(tampon), fichier_à_lire);
 
     while (fgets(tampon, sizeof(tampon), fichier_à_lire) != NULL)
     {

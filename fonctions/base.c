@@ -10,7 +10,6 @@ char **division(char *t)
 
     for (i; i < taille; i++)
     {
-        printf("%c \n", t[i]);
         if (t[i] == ' ' || t[i] == '\t')
         {
             result[0] = slice(t, 0, i);
