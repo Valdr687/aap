@@ -66,7 +66,7 @@ int main(int ArgumentCount, char **ArgumentList)
 
     if (entree != NULL) // Depuis un fichier
     {
-        t_graph_list graphe = lecture(entree);
+        t_graph_list graphe = list_lecture(entree);
         if (graphe.size == -1) {
             printf("Le fichier est vide ou n'existe pas.\n");
             return 0;

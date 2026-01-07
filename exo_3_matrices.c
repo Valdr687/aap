@@ -15,12 +15,12 @@ void g_order(t_graph_mat *g);
 void enum_cfc_kosaraju(t_graph_mat * g);
 
 int main(){
-    t_graph_mat * g = graph_new(4);
-    graph_add_edge(g, 0, 1);
-    graph_add_edge(g, 0,2);
-    graph_add_edge(g, 2,1);
-    graph_add_edge(g, 2,3);
-    graph_add_edge(g, 3,2);
+    t_graph_mat * g = graph_mat_new(4);
+    graph_mat_add_edge(g, 0, 1);
+    graph_mat_add_edge(g, 0,2);
+    graph_mat_add_edge(g, 2,1);
+    graph_mat_add_edge(g, 2,3);
+    graph_mat_add_edge(g, 3,2);
     for (int i = 0; i< g->size; i++)
     {
         for (int j = 0; j < g->size; j++)

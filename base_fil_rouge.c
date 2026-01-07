@@ -32,14 +32,15 @@ typedef struct {
 
 
 //////// Graphes ////////
-t_graph_mat * graph_new(int size);
-t_graph_list graph_list_new(int size);
-void graph_add_edge(t_graph_mat * g, t_vertex u, t_vertex v);
+t_graph_mat * graph_mat_new(int size);
+void graph_mat_add_edge(t_graph_mat * g, t_vertex u, t_vertex v);
 t_graph_mat * graph_inverse(t_graph_mat * g);
 t_graph_list * graph_inverse_list(t_graph_list *g);
 void graph_free(t_graph_mat * g);
-void graph_list_free(t_graph_list * g);
 
+t_graph_list graph_list_new(int size);
+void graph_add_edge (t_graph_list * g, t_vertex u, t_vertex p);
+void graph_list_free(t_graph_list *g);
 
 //////// Piles ////////
 void stack_show(t_stack * ps);
@@ -63,38 +64,49 @@ int list_cursor_get_val(t_node * lc);
 t_node * list_cursor_next(t_node * lc);
 
 
-
-//////// main ////////
-// int main() {
-//   printf("Hello world!\n");
-  
-//   return 0;
-// }
-
-
 //////// Graphes ////////
 
 //////// Liste d'adjacences ////////
 
 // Créer un graphe sous forme de liste d'adjacences
-// Utilisation : t_graph_list graphe = creer_graphe_liste(); 
-t_graph_list creer_graphe_liste() {
-  t_list l = list_new();
-  t_graph_list graphe = {0,l};
+// Utilisation : t_graph_list graphe = graph_list_new(taille);
+t_graph_list graph_list_new(int size)
+{
+  t_graph_list g;
 
-  return graphe;
+  g.size = size;
+  g.l = malloc(size * sizeof(t_list));
+  assert(g.l != NULL);
+
+  for (int i = 0; i < size; i++)
+    g.l[i] = list_new(); // Liste d'adjacence vide
+
+  return g;
 }
 
-// Rajouter un sommet à un graphe représenté par une liste d'adjacence
-// Utilisation : ajouter_sommet_liste(t_graph_list * graphe, t_list connection); // Avec connection représentant toutes les connections du sommet rajouté
-void ajouter_sommet_liste(t_graph_list * graphe, t_list connection) {
+// Ajoute une arrête entre deux sommets u et v (u et v entiers)
+void graph_list_add_edge(t_graph_list *g, t_vertex u, t_vertex v)
+{
+  assert(u >= 0 && u < g->size);
+  assert(v >= 0 && v < g->size);
+  // Il faut ajouter u à la liste de v
+  g->l[u] = list_add_head(v, g->l[u]);
+}
 
+void graph_list_free(t_graph_list *g)
+{
+  for (int i = 0; i < g->size; i++)
+    g->l[i] = list_free(g->l[i]);
+
+  free(g->l);
+  g->l = NULL;
+  g->size = 0;
 }
 
 //////// Matrices d'adjacences ////////
 
 // Crée une nouvelle matrice vide
-t_graph_mat * graph_new(int size){
+t_graph_mat * graph_mat_new(int size){
 	t_graph_mat * g = malloc(sizeof(*g));
 	assert(g != NULL);
   g->size = size;
@@ -105,8 +117,8 @@ t_graph_mat * graph_new(int size){
 
 }
 
-// Ajoute une arrête entre deux sommets
-void graph_add_edge(t_graph_mat * g, t_vertex u, t_vertex v){
+// Ajoute une arrête entre deux sommets u et v (u et v entiers)
+void graph_mat_add_edge(t_graph_mat * g, t_vertex u, t_vertex v){
   assert(u>=0 && u< g->size);
   assert(v>=0 && v< g->size);
   g->m[u][v] = 1;
@@ -114,7 +126,7 @@ void graph_add_edge(t_graph_mat * g, t_vertex u, t_vertex v){
 
 // Calcule le graphe inverse
 t_graph_mat * graph_inverse(t_graph_mat * g){
-  t_graph_mat * g_inv = graph_new(g->size);
+  t_graph_mat * g_inv = graph_mat_new(g->size);
   for (int i = 0; i< g->size; i++)
     for (int j = 0; j < g->size; j++)
       if (g->m[i][j]) g_inv -> m[j][i] = 1;
@@ -147,29 +159,6 @@ t_graph_list * graph_inverse_list(t_graph_list * g)
 void graph_free(t_graph_mat * g){
   free(g);
 }
-
-t_graph_list graph_list_new(int size) {
-  t_graph_list g;
-
-  g.size = size;
-  g.l = malloc(size * sizeof(t_list));
-  assert(g.l != NULL);
-
-  for (int i = 0; i < size; i++)
-    g.l[i] = list_new();   // empty adjacency list
-
-  return g;
-}
-
-void graph_list_free(t_graph_list * g) {
-  for (int i = 0; i < g->size; i++)
-    g->l[i] = list_free(g->l[i]);
-
-  free(g->l);
-  g->l = NULL;
-  g->size = 0;
-}
-
 
 //////// Piles ////////
 
