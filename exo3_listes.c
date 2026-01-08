@@ -6,7 +6,7 @@
 #include "./fonctions/lecture_ecriture.h"
 #include "./fonctions/base.h"
 
-#define N 100
+#define N 20000
 
 t_vertex order[N];
 

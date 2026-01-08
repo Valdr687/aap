@@ -28,7 +28,61 @@ sudo dnf install graphviz
 ## Tests de performance
 
 ```sh
+make
 
+## Conversion
+echo "Essai 1 : lecture liste" && time ./exo1_list -i ./graphes/noms/PC-biogrid.txt -o temp.dot
+echo "Essai 1 : lecture liste" && time ./exo1_list -i ./graphes/noms/PC-biogrid.txt -o temp.dot
+echo "Essai 1 : lecture liste" && time ./exo1_list -i ./graphes/noms/PC-biogrid.txt -o temp.dot
+
+echo "Essai 1 : lecture matrice" && time ./exo1_mat -i ./graphes/noms/PC-biogrid.txt -o temp.dot
+echo "Essai 1 : lecture matrice" && time ./exo1_mat -i ./graphes/noms/PC-biogrid.txt -o temp.dot
+echo "Essai 1 : lecture matrice" && time ./exo1_mat -i ./graphes/noms/PC-biogrid.txt -o temp.dot
+
+echo "Essai 2 : recherche de chemin (listes)" && time ./exo2_listes -i ./graphes/noms/PC-biogrid.txt -start CCDC138 -goal ITGA2
+echo "Essai 2 : recherche de chemin (listes)" && time ./exo2_listes -i ./graphes/noms/PC-biogrid.txt -start CCDC138 -goal ITGA2
+echo "Essai 2 : recherche de chemin (listes)" && time ./exo2_listes -i ./graphes/noms/PC-biogrid.txt -start CCDC138 -goal ITGA2
+
+echo "Essai 2 : recherche de chemin (matrices)" && time ./exo2_matrices -i ./graphes/noms/PC-biogrid.txt -start CCDC138 -goal ITGA2
+echo "Essai 2 : recherche de chemin (matrices)" && time ./exo2_matrices -i ./graphes/noms/PC-biogrid.txt -start CCDC138 -goal ITGA2
+echo "Essai 2 : recherche de chemin (matrices)" && time ./exo2_matrices -i ./graphes/noms/PC-biogrid.txt -start CCDC138 -goal ITGA2
+
+echo "Essai 3 : composantes fortement connexes (listes)" && time ./exo3_listes -i ./graphes/noms/PC-biogrid.txt
+echo "Essai 3 : composantes fortement connexes (listes)" && time ./exo3_listes -i ./graphes/noms/PC-biogrid.txt
+echo "Essai 3 : composantes fortement connexes (listes)" && time ./exo3_listes -i ./graphes/noms/PC-biogrid.txt
+
+echo "Essai 3 : composantes fortement connexes (matrices)" && time ./exo3_matrices -i ./graphes/noms/PC-biogrid.txt
+echo "Essai 3 : composantes fortement connexes (matrices)" && time ./exo3_matrices -i ./graphes/noms/PC-biogrid.txt
+echo "Essai 3 : composantes fortement connexes (matrices)" && time ./exo3_matrices -i ./graphes/noms/PC-biogrid.txt
+```
+
+```sh
+make
+
+## Conversion
+echo "Essai 1 : lecture liste" && time ./exo1_list -i ./graphes/numeros/ex2.txt -o temp.dot
+echo "Essai 1 : lecture liste" && time ./exo1_list -i ./graphes/numeros/ex2.txt -o temp.dot
+echo "Essai 1 : lecture liste" && time ./exo1_list -i ./graphes/numeros/ex2.txt -o temp.dot
+
+echo "Essai 1 : lecture matrice" && time ./exo1_mat -i ./graphes/numeros/ex2.txt -o temp.dot
+echo "Essai 1 : lecture matrice" && time ./exo1_mat -i ./graphes/numeros/ex2.txt -o temp.dot
+echo "Essai 1 : lecture matrice" && time ./exo1_mat -i ./graphes/numeros/ex2.txt -o temp.dot
+
+echo "Essai 2 : recherche de chemin (listes)" && time ./exo2_listes -i ./graphes/numeros/ex2.txt -start 0 -goal 10
+echo "Essai 2 : recherche de chemin (listes)" && time ./exo2_listes -i ./graphes/numeros/ex2.txt -start 0 -goal 10
+echo "Essai 2 : recherche de chemin (listes)" && time ./exo2_listes -i ./graphes/numeros/ex2.txt -start 0 -goal 10
+
+echo "Essai 2 : recherche de chemin (matrices)" && time ./exo2_matrices -i ./graphes/numeros/ex2.txt -start 0 -goal 10
+echo "Essai 2 : recherche de chemin (matrices)" && time ./exo2_matrices -i ./graphes/numeros/ex2.txt -start 0 -goal 10
+echo "Essai 2 : recherche de chemin (matrices)" && time ./exo2_matrices -i ./graphes/numeros/ex2.txt -start 0 -goal 10
+
+echo "Essai 3 : composantes fortement connexes (listes)" && time ./exo3_listes -i ./graphes/numeros/ex2.txt
+echo "Essai 3 : composantes fortement connexes (listes)" && time ./exo3_listes -i ./graphes/numeros/ex2.txt
+echo "Essai 3 : composantes fortement connexes (listes)" && time ./exo3_listes -i ./graphes/numeros/ex2.txt
+
+echo "Essai 3 : composantes fortement connexes (matrices)" && time ./exo3_matrices -i ./graphes/numeros/ex2.txt
+echo "Essai 3 : composantes fortement connexes (matrices)" && time ./exo3_matrices -i ./graphes/numeros/ex2.txt
+echo "Essai 3 : composantes fortement connexes (matrices)" && time ./exo3_matrices -i ./graphes/numeros/ex2.txt
 ```
 
 ## Commandes de référence
