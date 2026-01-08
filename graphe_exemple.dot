@@ -1,6 +1,0 @@
-digraph nom_du_graphe {
-a -> b;
-b -> c;
-a -> d;
-c -> d;
-}
