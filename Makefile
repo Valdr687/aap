@@ -35,7 +35,7 @@ exo1_mat: exo1_mat.o $(FONCTIONS_OBJ)
 exo2_listes: exo2_listes.o $(FONCTIONS_OBJ)
 	$(CC) $(LDFLAGS) -o $@ $^
 
-exo2_matrices: exo2_mat.o $(FONCTIONS_OBJ)
+exo2_matrices: exo2_matrices.o $(FONCTIONS_OBJ)
 	$(CC) $(LDFLAGS) -o $@ $^
 	
 exo3_listes: exo3_listes.o $(FONCTIONS_OBJ)
@@ -50,7 +50,7 @@ exo3_matrices: exo3_matrices.o $(FONCTIONS_OBJ)
 
 # Nettoyage
 clean:
-	rm -f $(FONCTIONS_OBJ) exo1_list.o exo1_mat.o exo2_listes.o exo2_mat.o exo3_listes.o exo3_matrices.o
+	rm -f $(FONCTIONS_OBJ) exo1_list.o exo1_mat.o exo2_listes.o exo2_matrices.o exo3_listes.o exo3_matrices.o
 
 fclean: clean
 	rm -f $(EXECUTABLES)

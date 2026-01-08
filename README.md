@@ -25,6 +25,12 @@ Sous Fedora :
 sudo dnf install graphviz
 ```
 
+## Tests de performance
+
+```sh
+
+```
+
 ## Commandes de référence
 
 ### Générer une image à partir d'un fichier .dot
