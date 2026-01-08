@@ -62,12 +62,12 @@ int main(int ArgumentCount, char **ArgumentList)
 
     t_type type;
     char **sommets = NULL;
-    t_graph_list graphe;
+    t_graph_mat *graphe;
     
     if (entree != NULL) // Depuis un fichier
     {
-        graphe = list_lecture(entree, &type, &sommets);
-        if (graphe.size == -1)
+        graphe = mat_lecture(entree, &type, &sommets);
+        if (graphe->size == -1)
         {
             printf("Le fichier est vide ou n'existe pas.\n");
             return 0;
@@ -75,7 +75,7 @@ int main(int ArgumentCount, char **ArgumentList)
     }
     else // Lecture depuis le terminal (stdin)
     {
-        graphe = list_lecture_trmnl(&type, &sommets);
+        graphe = mat_lecture_trmnl(&type, &sommets);
     }
 
     // Ecriture
@@ -84,17 +84,17 @@ int main(int ArgumentCount, char **ArgumentList)
 
     if (sortie != NULL)
     {
-        graph_list_ecriture_dot(&graphe, type, sommets, sortie);
+        graph_mat_ecriture_dot(graphe, type, sommets, sortie);
     }
     else // Vers le terminal (stdout)
     {
-        graph_list_ecriture_dot_trml(&graphe, type, sommets);
+        graph_mat_ecriture_dot_trml(graphe, type, sommets);
     }
     
     // Libération de la mémoire
     if (type == STR && sommets != NULL)
     {
-        for (int i = 0; i < graphe.size; i++)
+        for (int i = 0; i < graphe->size; i++)
         {
             free(sommets[i]);
         }

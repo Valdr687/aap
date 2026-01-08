@@ -20,7 +20,7 @@ HEADERS = $(FONCTIONS_DIR)/base.h \
           $(FONCTIONS_DIR)/lecture_ecriture.h
 
 # Exécutables
-EXECUTABLES = exo1_list exo_3_listes exo_3_matrices
+EXECUTABLES = exo1_list exo1_mat exo_3_listes exo_3_matrices
 
 # Règle par défaut
 all: $(EXECUTABLES)
@@ -29,6 +29,9 @@ all: $(EXECUTABLES)
 exo1_list: exo1_list.o $(FONCTIONS_OBJ)
 	$(CC) $(LDFLAGS) -o $@ $^
 
+exo1_mat: exo1_mat.o $(FONCTIONS_OBJ)
+	$(CC) $(LDFLAGS) -o $@ $^
+	
 exo_3_listes: exo_3_listes.o $(FONCTIONS_OBJ)
 	$(CC) $(LDFLAGS) -o $@ $^
 

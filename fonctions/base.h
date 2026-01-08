@@ -12,7 +12,8 @@
 typedef enum
 {
     INT,
-    STR
+    STR,
+    ERROR = -1
 } t_type;
 
 // Fonctions utilitaires

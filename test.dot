@@ -1,0 +1,7 @@
+digraph G {
+start -> working;
+start -> stop;
+working -> paused;
+working -> stop;
+paused -> working;
+}

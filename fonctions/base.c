@@ -3,12 +3,12 @@
 // TODO : Description
 char **division(char *t)
 {
-    int i = 0;
+    size_t i ;
     size_t taille = strlen(t);
     char **result = malloc(2 * sizeof(char *));
     assert(result != NULL);
 
-    for (i; i < taille; i++)
+    for (i = 0; i < taille; i++)
     {
         if (t[i] == ' ' || t[i] == '\t')
         {
@@ -42,8 +42,8 @@ char *slice(char *str, size_t start, size_t end)
 // Utilisation : int rang = rang_par_valeur(chaine, tableau_de_chaines, taille_tableau);
 int rang_par_valeur(char *s, char **t, int taille)
 {
-    int i = 0;
-    for (i; i < taille; i++)
+    int i;
+    for (i = 0; i < taille; i++)
     {
         if (strcmp(s, t[i]) == 0)
         {
@@ -55,7 +55,8 @@ int rang_par_valeur(char *s, char **t, int taille)
 
 // Retourne le type du graphe (INT ou STR) et la taille du graphe en fonction du fichier
 t_type caracteristiques_graphe(char *chemin, int * taille) {
-    t_type type;
+    t_type type = -1;
+
 
     // Vérification que le fichier ne soit pas nul
 
