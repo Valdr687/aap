@@ -3,6 +3,8 @@
 #include <assert.h>
 #include <string.h>
 #include "./fonctions/base_fil_rouge.h"
+#include "./fonctions/lecture_ecriture.h"
+#include "./fonctions/base.h"
 
 #define N 100
 
@@ -10,30 +12,51 @@ t_vertex order[N];
 
 int kosaraju_1_recur(t_graph_mat * g, t_vertex x, t_bool marking[], t_vertex order[], int step);
 void kosaraju_1(t_graph_mat *g);
-t_bool kosaraju_2_recur(t_graph_mat *g, t_vertex x, t_bool marking[]);
-void kosaraju_2(t_graph_mat *g);
+t_bool kosaraju_2_recur(t_graph_mat *g, t_vertex x, t_bool marking[], t_type type, char **sommets);
+void kosaraju_2(t_graph_mat *g, t_type type, char **sommets);
 void g_order(t_graph_mat *g);
-void enum_cfc_kosaraju(t_graph_mat * g);
+void enum_cfc_kosaraju(t_graph_mat * g, t_type type, char **sommets);
 
-int main(){
-    t_graph_mat * g = graph_mat_new(4);
-    graph_mat_add_edge(g, 0, 1);
-    graph_mat_add_edge(g, 0,2);
-    graph_mat_add_edge(g, 2,1);
-    graph_mat_add_edge(g, 2,3);
-    graph_mat_add_edge(g, 3,2);
-    for (int i = 0; i< g->size; i++)
+int main(int ArgumentCount, char **ArgumentList)
+{
+
+    char *entree = NULL;
+    // Extraction des paramètres
+    int erreur = parametres_exo3(ArgumentCount, ArgumentList, &entree);
+    if (erreur == -1)
     {
-        for (int j = 0; j < g->size; j++)
-        {
-            printf("%d ", g->m[i][j]);
-        }
-        printf("\n");
+        return 0;
     }
-    printf("\n");
-    kosaraju_1(g);
-    enum_cfc_kosaraju(g);
-    graph_free(g);
+
+    // Lecture
+
+    t_type type;
+    char **sommets = NULL;
+    t_graph_mat *graphe;
+
+    if (entree != NULL) // Depuis un fichier
+    {
+        graphe = mat_lecture(entree, &type, &sommets);
+        if (graphe->size == -1)
+        {
+            printf("Le fichier est vide ou n'existe pas.\n");
+            return 0;
+        }
+    }
+    else // Lecture depuis le terminal (stdin)
+    {
+        graphe = mat_lecture_trmnl(&type, &sommets);
+    }
+    kosaraju_1(graphe);
+    enum_cfc_kosaraju(graphe, type, sommets);
+    
+    // Libération de la mémoire
+    if (type == STR)
+    {
+        sommets_free(sommets, graphe->size);
+    }
+    graph_free(graphe);
+    
     return 0;
 }
 
@@ -65,7 +88,7 @@ void kosaraju_1(t_graph_mat *g){ // sert d'initialisation de toutes les variable
     }
 }
 
-t_bool kosaraju_2_recur(t_graph_mat *g, t_vertex x, t_bool marking[]){
+t_bool kosaraju_2_recur(t_graph_mat *g, t_vertex x, t_bool marking[], t_type type, char **sommets){
     /* recherche d'une nouvelle CFC --> retourne faux si on est déjà passé par le sommet x
         retourne vrai s'il y a une nouvelle CFC
     */
@@ -74,17 +97,20 @@ t_bool kosaraju_2_recur(t_graph_mat *g, t_vertex x, t_bool marking[]){
         return 0;
     } else {
         marking[x] = 1; // si non, on marque le sommet comme exploré
-        printf("%d ", x);
+        if (type == STR)
+            printf("%s ", sommets[x]);
+        else
+            printf("%d ", x);
         for (t_vertex y = 0; y < g->size; y++)
         {
             if (g->m[x][y])
-                kosaraju_2_recur(g, y, marking);
+                kosaraju_2_recur(g, y, marking, type, sommets);
         }
         return 1;
     }
 }
 
-void kosaraju_2(t_graph_mat *g){
+void kosaraju_2(t_graph_mat *g, t_type type, char **sommets){
     t_bool marking[N] = {0}; // initialisation de tous les marquages à 0
     int inv_order[N]; // tableau qui stocke l'ordre suffixe inverse
     t_vertex x;
@@ -93,7 +119,7 @@ void kosaraju_2(t_graph_mat *g){
         inv_order[i] = order[g-> size -1 -i];
     for (x = 0; x < g->size; x++)
     {
-        if (kosaraju_2_recur(g, inv_order[x], marking))
+        if (kosaraju_2_recur(g, inv_order[x], marking, type, sommets))
         {
             nb_scc ++;
             printf("\n");
@@ -102,7 +128,7 @@ void kosaraju_2(t_graph_mat *g){
     printf("%d composante(s) fortement connexe(s) trouvée(s)\n", nb_scc);
 }
 
-void enum_cfc_kosaraju(t_graph_mat * g){
+void enum_cfc_kosaraju(t_graph_mat * g, t_type type, char **sommets){
     t_bool marking[N] = {0};
     int inv_order[N];
     t_vertex x;
@@ -112,7 +138,7 @@ void enum_cfc_kosaraju(t_graph_mat * g){
     for (int i = 0; i < g->size; i++)
         inv_order[i] = order[g-> size -1 -i];
     for (x = 0; x < g->size; x++)
-        if (kosaraju_2_recur(g_inv, inv_order[x], marking))
+        if (kosaraju_2_recur(g_inv, inv_order[x], marking, type, sommets))
         {
             nb_scc ++;
             printf("\n");

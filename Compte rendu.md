@@ -13,3 +13,7 @@ utilisition de fichiers.h
 2) Plus aisé pour les makefiles
 3) Violations ODR (One Definition Rule)
 4) Mais marche pour un cas simple comme ici
+
+## Remarque
+
+pas d'argument considère entre et sortie vide

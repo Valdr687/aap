@@ -3,6 +3,8 @@
 #include <assert.h>
 #include <string.h>
 #include "./fonctions/base_fil_rouge.h"
+#include "./fonctions/lecture_ecriture.h"
+#include "./fonctions/base.h"
 
 #define N 100
 
@@ -10,27 +12,52 @@ t_vertex order[N];
 
 void kosaraju_1_recur_list(t_graph_list * g, t_vertex x, t_bool marking[], t_vertex order[], int * step);
 void kosaraju_1_list(t_graph_list *g);
-t_bool kosaraju_2_recur_list(t_graph_list *g, t_vertex x, t_bool marking[]);
-void kosaraju_2_list(t_graph_list *g);
+t_bool kosaraju_2_recur_list(t_graph_list *g, t_vertex x, t_bool marking[], t_type type, char **sommets);
 void g_order_list(t_graph_list *g);
-void enum_cfc_kosaraju_list(t_graph_list * g);
+void enum_cfc_kosaraju_list(t_graph_list * g, t_type type, char **sommets);
 
-int main(){
-    t_graph_list g = graph_list_new(4);
+int main(int ArgumentCount, char **ArgumentList)
+{
+    char *entree = NULL;
+    // Extraction des paramètres
 
-    g.l[0] = list_add_head(1, g.l[0]);
-    g.l[0] = list_add_head(2, g.l[0]);
-    g.l[2] = list_add_head(1, g.l[2]);
-    g.l[2] = list_add_head(3, g.l[2]);
-    g.l[3] = list_add_head(2, g.l[3]);
+    int erreur = parametres_exo3(ArgumentCount, ArgumentList, &entree);
+    if (erreur == -1)
+    {
+        return 0;
+    }
+    // Lecture
 
-    kosaraju_1_list(&g);
-    kosaraju_2_list(&g);
-    enum_cfc_kosaraju_list(&g);
-    graph_list_free(&g);
+    t_type type;
+    char **sommets = NULL;
+    t_graph_list graphe;
+
+    if (entree != NULL) // Depuis un fichier
+    {
+        graphe = list_lecture(entree, &type, &sommets);
+        if (graphe.size == -1)
+        {
+            printf("Le fichier est vide ou n'existe pas.\n");
+            return 0;
+        }
+    }
+    else // Lecture depuis le terminal (stdin)
+    {
+        graphe = list_lecture_trmnl(&type, &sommets);
+    }
+
+    kosaraju_1_list(&graphe);
+    enum_cfc_kosaraju_list(&graphe, type, sommets);
+
+    // Libération de la mémoire
+    if (type == STR)
+    {
+        sommets_free(sommets, graphe.size);
+    }
+    graph_list_free(&graphe);
+
     return 0;
 }
-
 
 void kosaraju_1_recur_list(t_graph_list * g, t_vertex x, t_bool marking[], t_vertex order[], int * step){
     t_vertex y;
@@ -65,21 +92,24 @@ void kosaraju_1_list(t_graph_list *g){
 
 }
 
-t_bool kosaraju_2_recur_list(t_graph_list *g, t_vertex x, t_bool marking[]){
+t_bool kosaraju_2_recur_list(t_graph_list *g, t_vertex x, t_bool marking[], t_type type, char **sommets){
     if (marking[x])
         return 0;
     marking[x] = 1;
-    printf("%d ", x);
+    if (type == STR)
+        printf("%s ", sommets[x]);
+    else
+        printf("%d ", x);
     t_node *lc = list_cursor_new(g->l[x]);  // head of adjacency list
     while (!list_cursor_at_end(lc)) {
         t_vertex y = list_cursor_get_val(lc);
-        kosaraju_2_recur_list(g, y, marking);
+        kosaraju_2_recur_list(g, y, marking, type, sommets);
         lc = list_cursor_next(lc);
     }
     return 1;
 }
 
-void kosaraju_2_list(t_graph_list *g){
+void kosaraju_2_list(t_graph_list *g, t_type type, char **sommets){
     t_bool marking[N] = {0};
     int inv_order[N];
     t_vertex x;
@@ -88,7 +118,7 @@ void kosaraju_2_list(t_graph_list *g){
     for (int i = 0; i<g->size; i++)
         inv_order[i] = order[g->size-1-i];
     for (x = 0; x < g->size; x++)
-        if (kosaraju_2_recur_list(g_inv, inv_order[x], marking))
+        if (kosaraju_2_recur_list(g_inv, inv_order[x], marking, type, sommets))
         {
             nb_scc++;
             printf("\n");
@@ -96,7 +126,7 @@ void kosaraju_2_list(t_graph_list *g){
     printf("%d composante(s) fortement connexe(s) trouvée(s)\n", nb_scc);
 }
 
-void enum_cfc_kosaraju_list(t_graph_list * g)
+void enum_cfc_kosaraju_list(t_graph_list * g, t_type type, char **sommets)
 {
     t_bool marking[N] = {0};
     int inv_order[N];
@@ -111,7 +141,7 @@ void enum_cfc_kosaraju_list(t_graph_list * g)
 
     for (t_vertex x = 0; x < g->size; x++) // parcours en profondeur dans le graphe inverse
     {
-        if (kosaraju_2_recur_list(g_inv, inv_order[x], marking))
+        if (kosaraju_2_recur_list(g_inv, inv_order[x], marking, type, sommets))
         {
             nb_scc++;
             printf("\n");

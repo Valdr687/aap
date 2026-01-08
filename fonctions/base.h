@@ -21,5 +21,6 @@ char **division(char *t);
 char *slice(char *str, size_t start, size_t end);
 int rang_par_valeur(char *s, char **t, int taille);
 t_type caracteristiques_graphe(char *chemin, int *taille);
+void sommets_free(char **sommets, int taille);
 
 #endif // BASE_H

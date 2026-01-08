@@ -94,3 +94,19 @@ t_type caracteristiques_graphe(char *chemin, int * taille) {
 
     return type;
 }
+
+// Libère la mémoire allouée pour un tableau de sommets (chaînes de caractères)
+// Utilisation :
+//   sommets_free(sommets, taille);
+void sommets_free(char **sommets, int taille)
+{
+    if (sommets == NULL)
+        return;
+    
+    for (int i = 0; i < taille; i++)
+    {
+        if (sommets[i] != NULL)
+            free(sommets[i]);
+    }
+    free(sommets);
+}
