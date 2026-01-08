@@ -20,7 +20,7 @@ HEADERS = $(FONCTIONS_DIR)/base.h \
           $(FONCTIONS_DIR)/lecture_ecriture.h
 
 # Exécutables
-EXECUTABLES = exo1_list exo1_mat exo_3_listes exo_3_matrices
+EXECUTABLES = exo1_list exo1_mat exo2_listes exo2_matrices exo3_listes exo3_matrices
 
 # Règle par défaut
 all: $(EXECUTABLES)
@@ -31,11 +31,17 @@ exo1_list: exo1_list.o $(FONCTIONS_OBJ)
 
 exo1_mat: exo1_mat.o $(FONCTIONS_OBJ)
 	$(CC) $(LDFLAGS) -o $@ $^
-	
-exo_3_listes: exo_3_listes.o $(FONCTIONS_OBJ)
+
+exo2_listes: exo2_listes.o $(FONCTIONS_OBJ)
 	$(CC) $(LDFLAGS) -o $@ $^
 
-exo_3_matrices: exo_3_matrices.o $(FONCTIONS_OBJ)
+exo2_matrices: exo2_mat.o $(FONCTIONS_OBJ)
+	$(CC) $(LDFLAGS) -o $@ $^
+	
+exo3_listes: exo3_listes.o $(FONCTIONS_OBJ)
+	$(CC) $(LDFLAGS) -o $@ $^
+
+exo3_matrices: exo3_matrices.o $(FONCTIONS_OBJ)
 	$(CC) $(LDFLAGS) -o $@ $^
 
 # Règles pour les fichiers objets
@@ -44,7 +50,7 @@ exo_3_matrices: exo_3_matrices.o $(FONCTIONS_OBJ)
 
 # Nettoyage
 clean:
-	rm -f $(FONCTIONS_OBJ) exo1_list.o exo_3_listes.o exo_3_matrices.o
+	rm -f $(FONCTIONS_OBJ) exo1_list.o exo1_mat.o exo2_listes.o exo2_mat.o exo3_listes.o exo3_matrices.o
 
 fclean: clean
 	rm -f $(EXECUTABLES)

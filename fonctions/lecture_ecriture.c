@@ -62,13 +62,13 @@ int parametres_lecture_ecriture(int ArgumentCount, char **ArgumentList, char **e
 // Lit les arguments de ligne de commande pour l'exercice 2 (avec options -start et -goal)
 // Retourne 0 en cas de succès, -1 en cas d'erreur
 // Utilisation :
-//   char *entree = NULL, *sortie = NULL;
-//   if (parametres_exo2(argc, argv, &entree, &sortie) == -1) return 0;
-int parametres_exo2(int ArgumentCount, char **ArgumentList, char **entree, char **sortie)
+//   char *entree = NULL, *start = NULL, *goal = NULL;
+//   if (parametres_exo2(argc, argv, &entree, &start, &goal) == -1) return 0;
+int parametres_exo2(int ArgumentCount, char **ArgumentList, char **entree, char **start, char **goal)
 {
     char OptionsValides[4][7] = {"-i","-start","-goal"};
 
-    if (ArgumentCount > 6) // Teste si on a un nombre d'argument possible, sinon sortie
+    if (ArgumentCount > 7) // Teste si on a un nombre d'argument possible, sinon sortie
     {
         erreur_arguments(ArgumentCount - 1, 6);
         return -1;
@@ -77,7 +77,7 @@ int parametres_exo2(int ArgumentCount, char **ArgumentList, char **entree, char 
     // Vérification des arguments
 
     int i;
-    int validites[6] = {0};
+    int validites[7] = {0};
 
     for (i = 1; i < ArgumentCount; i++)
     {
@@ -104,11 +104,18 @@ int parametres_exo2(int ArgumentCount, char **ArgumentList, char **entree, char 
                 *entree = ArgumentList[i + 1];
             }
         }
-        if (validites[i] == 2) // Option est -o
+        if (validites[i] == 2) // Option est -start
         {
             if (validites[i + 1] == -1)
             {
-                *sortie = ArgumentList[i + 1];
+                *start = ArgumentList[i + 1];
+            }
+        }
+        if (validites[i] == 3) // Option est -goal
+        {
+            if (validites[i + 1] == -1)
+            {
+                *goal = ArgumentList[i + 1];
             }
         }
     }

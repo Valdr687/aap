@@ -6,7 +6,7 @@
 
 // Lecture des paramètres
 int parametres_lecture_ecriture(int ArgumentCount, char **ArgumentList, char **entree, char **sortie);
-int parametres_exo2(int ArgumentCount, char **ArgumentList, char **entree, char **sortie);
+int parametres_exo2(int ArgumentCount, char **ArgumentList, char **entree, char **start, char **goal);
 int parametres_exo3(int ArgumentCount, char **ArgumentList, char **entree);
 void erreur_option(char *option);
 void erreur_option_exo2(char *option);
