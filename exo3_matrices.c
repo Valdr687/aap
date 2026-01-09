@@ -47,7 +47,6 @@ int main(int ArgumentCount, char **ArgumentList)
     {
         graphe = mat_lecture_trmnl(&type, &sommets);
     }
-    kosaraju_1(graphe);
     enum_cfc_kosaraju(graphe, type, sommets);
 
     // Libération de la mémoire
